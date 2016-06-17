@@ -1,0 +1,75 @@
+Name: Omar Ozgur
+ID: 704465898
+Class: CS111
+Lab Section: 1C
+
+*** README ***
+
+File Information:
+	
+	README: This file gives information about the files that are included in the project, as well
+	as information regarding features and methods of testing.
+
+	Makefile: This is the makefile that was created to automate useful tasks. The "make" command
+	causes the default target to be executed, which builds object files, as well as the resulting
+	"lab0" executable. "make clean" can be used to delete all makefile-created files from the project
+	directory. "make check" can be used to run a series of tests that verify the integrity of the
+	program. "make dist" can be used to create a distributable tarball containing the files "lab0.c", 
+	"Makefile", "README", "backtrace.png", and "breakpoint.png".
+
+	lab0.c: This is the C program that was created to copy contents from standard input to standard
+	output. This program utilizes the "getopt" library to deal with option parsing. The POSIX functions
+	open(2), creat(2), close(2), read(2), write(2), dup(2), exit(2), signal(2), perror(3),
+	and getopt(3) were useful in order to manipulate file input and output, as well as deal with error
+	and fault handling.
+
+	backtrace.png: In order to get this screenshot, I ran the "lab0" executable in gdb with the command
+	"gdb lab0". I then used "run --segfault" to run the program with the --segfault option. After
+	the segmentation fault caused the program to halt, I ran the command "bt" in order to show a
+	backtrace of the stack. This screenshot shows the described output.
+
+	breakpoint.png: In order to get this screenshot, I ran the command "gdb lab0" to run the "lab0" executable
+	in gdb. Based on the previous gdb output shown in the screenshot "backtrace.png", I saw that the line
+	that led to the segmentation fault was line 67. Therefore, I ran "break 67" to place a breakpoint
+	at line 67, and then ran "run --segfault" to fun the program until it stopped at the breakpoint. I
+	then ran "print nullVar" to see that the variable "nullVar" was equal to "0x0", showing that it was
+	indeed NULL. This screenshot shows the described output.
+
+Options:
+	
+	--input=filename: Uses the specified file as standard input
+	(An error while opening the file will cause the program to exit with a status of 1)
+
+	--output=filename: Uses the specified file as standard output
+	(An error while creating the file will cause the program to exit with a status of 2)
+
+	--segfault: Forces a segmentation fault to occur by attempting to store a value in a null char * pointer
+
+	--catch: Registers a SIGSEGV handler to catch a segmentation fault
+	(Catching a segmentation fault will cause the program to exit with a status of 3)
+
+Methods of testing:
+
+	When the command "make check" is run, the program is rebuilt, and a series of targets are used to test 
+	various aspects of the program. These targets can be seen in the Makefile:
+
+	testCatch: Uses the --segfault and --catch options to see if the program properly creates and catches a
+	segmentation fault, and exits with a status of 3.
+
+	testInputFail: Causes the program to attempt to read an unreadable file in order to see if the program
+	properly exits with a status of 1.
+
+	testOutputFail: Causes the program to attempt to write to an unwriteable file in order to see if the
+	program properly exits with a status of 2.
+
+	testNoOptions: Checks to see if the program exits with a status of 0 when no options are provided.
+
+	testInput: Checks to see if the program can read from a specified file, and output to standard output.
+
+	testOutput: Checks to see if the program can read from standard input, and output to a specified file.
+
+	testInputAndOutput: Checks to see if the program can read from a specified file, and output to a
+	specified file.
+
+	testAllOptions: Uses the --input, --output, --segfault, and --catch options to see if the program
+	properly exits with a status of 3 due to a segmentation fault being caught by a SIGSEGV handler.

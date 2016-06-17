@@ -1,0 +1,86 @@
+Name: Omar Ozgur
+ID: 704465898
+Class: CS111
+Lab Section: 1C
+Project: 2b
+
+*** README ***
+
+Answer:
+
+	2B.1A: Explain the variation in time per operation vs the number of iterations?
+	
+	Due to the fact that there is overhead related to the initial thread creation, the time per operation
+	initially drops with increasing numbers of iterations due to the overhead cost becoming relatively
+	insignificant as the thread undergoes more utilization. The reason that the time per operation increases
+	exponentially after the dip in the graph is because as the linked-list grows in size with more iterations,
+	each operation on the linked-list becomes more expensive, since the thread may have longer search times
+	when trying to find certain elements. This effect greatly outweighs the initial benefits that were seen
+	when increasing utilization of the thread.
+
+
+	2B.1B: How would you propose to correct for this effect?
+
+	In order to correct for the initial overhead of creating the thread, it would be possible to avoid creating
+	a new thread, and just run within the original process instead. However, in terms of the exponentially
+	increasing cost per operation seen in the graph "iterations.png", using linked-lists seems to be an ineffective
+	way of manipulating large amounts of data. One way to decrease the times would be to use multiple
+	linked-lists that only store specific sets of elements. For example, each list could contain only
+	the elements that have keys starting with specific letters. This would be better implemented with
+	a data structure such as a hash table, which would be likely to greatly increase insertion and deletion times.
+	
+
+	2B.2A: Compare the variation in time per protected operation vs the number of threads in Project 2B and
+	in Project 2A. Explain the difference.
+	
+	One reason that the time per protected operation is generally much larger in project 2B than in project
+	2A is that the critical sections are much larger for dealing with the linked-lists than those that
+	deal with addition and subtraction. This causes more threads to be delayed while waiting for resources.
+	This generally results in the locks being held for longer periods of time when dealing with linked-lists
+	in project 2B than when dealing with operations in project 2A. Also, due to longer critical sections
+	for the linked-lists, the probability of conflicts between threads is higher in project 2B because it
+	is easier to accidentally perform context switches while a thread is in a large critical section. These
+	increased conflicts generally result in more overhead and blocked threads, which decreases parallelism, 
+	and slows down each operation.
+
+File Information:
+
+	README: This file gives information about the files that are included in the project, as well
+        as information regarding features and methods of testing.
+
+	Makefile: This is the makefile that was created to automate useful tasks. The "make" command
+        causes the default target to be executed, which builds the executable program "lab2b". "make clean" can
+        be used to remove files created by the build process. "make dist" can be used to create a distributable
+        tarball containing the files "README", "Makefile", "lab2b.c", "SortedList.c", "SortedList.h",
+	"iterations.png", and "threads.png".
+
+	lab2b.c: This is the C program that was created for this project. It uses the Getopt library to parse
+        command line inputs. The program then creates a specified number of threads to perform actions on a shared
+	circularly-linked list. A supported "sync" option causes the threads to be managed with locking mechanisms
+	in order to ensure proper results. A "yield" option is also included in order to force threads to yield
+	during critical sections of specific functions.
+
+	SortedList.h: This is a header file that includes the declarations of functions that can be used to manipulate
+	elements within a linked-list. The file also includes data structures that can be accessed by lab2b.c and
+	SortedList.c.
+
+	SortedList.c: This is a C program that includes definitions of functions that are defined in the corresponding
+	header file. Such functions include "SortedList_insert", "SortedList_delete", "SortedList_lookup", and
+	"SortedList_length". These functions were used to manipulate specified linked-lists.
+
+	threads.png: An image that shows a graph of the average time per operation for a given number of threads.
+        Data is shown for "unprotected", "mutex", and "spin-lock" operation methods. 1000 iterations were used while
+	collecting data.
+
+	iterations.png: An image that shows a graph of the average time per operation as a function of the number
+        of iterations within a single thread.
+
+Options:
+
+	--threads=<numThreads>: Used to specify the number of threads that the program will create.
+
+	--iterations=<numIterations>: Used to specify the number of iterations that each thread will run.
+
+	--yield=<yieldOptions>: Used to specify which functions should cause threads to yield within critical sections.
+
+	--sync=<syncOption>: Used to specify which sync method should be used to ensure correct output.

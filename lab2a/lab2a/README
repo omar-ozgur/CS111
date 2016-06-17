@@ -1,0 +1,119 @@
+Name: Omar Ozgur
+ID: 704465898
+Class: CS111
+Lab Section: 1C
+Project: 2a
+
+*** README ***
+
+Answers:
+
+	2A.1A: Why does it take this many threads or iterations to result in failure?
+
+	After creating a bash script to run the program with varying numbers of threads and iterations, I found
+	that if there is one thread, no amount of iterations will cause a failure. For 2 threads, it took about 10000
+	iterations to get consistent failure. For 4, 8, 16, and 32 threads, it took around 1000 iterations to get consistent
+	failure. When there are many threads running, there are more chances of collisions due to interruptions. This is
+	why there were no errors with 1 thread, but many for 32 threads. Additionally, increasing the number of iterations
+	increased the number of opportunities for errors to occur due to interruptions, which is why failure occurred even
+	with just a few threads when the iterations were increased.
+
+
+	2A.1B: Why does a significantly smaller number of iterations so seldom fail?
+
+	Having a significantly smaller number of iterations seldom fails due to the fact that there are not as many
+	opportunities for collisions to occur. The number of iterations are proportional to the number of collisions that occur,
+	so it makes sense that less iterations will lead to less failures. Since each operation does not take very long to complete, 
+	decreasing the number of iterations makes it less likely for interruptions to cause conflicts between threads.
+
+
+	2A.2A: Why does the average cost per operation drop with increasing iterations?
+
+	The process of creating threads is expensive compared to the cost of each operation. Increasing the number of
+	iterations in each thread allows for each thread to perform more work, with the same initial setup time. For this reason,
+	allowing threads to do a lot of work is more worthwhile than creating threads to run only a few operations.
+
+
+	2A.2B: How do we know what the “correct” cost is?
+
+	The "correct" cost can be found by decreasing the relative cost of the initial thread setup, and removing any locking
+	methods that cause an increased operation cost. One way to do this would be to run the program with as many threads
+	as possible in order to maximize the amount of work that the thread performs. This essentially causes the initial thread setup
+	cost to be irrelevant, which yields a more accurate representation of the operation cost. In my program, the "correct" cost
+	was found to be about 7ns.
+
+
+	2A.2C: Why are the --yield runs so much slower?  Where is the extra time going?
+
+	Using the --yield option causes the program to run much slower because a context switch is forced to occur every time
+	the sum is being calculated in the "add" function. The extra time is spent performing context switches during each operation.
+	Since context switches can be very expensive, it is a better option in this program to just allow the calculations to complete
+	without switching threads each time.
+
+
+	2A.2D: Can we get valid timings if we are using --yield?  How, or why not?
+	
+	We cannot get valid timings if we are using --yield because every time the sum is calculated within each operation, the
+	yield function causes a context switch to occur, which allows another thread to run. This makes it very difficult to calculate
+	the time for each operation, since none of the operations are being run without interruption. Since context switches are relatively
+	expensive, the cost dramatically increases the amount of time that the program runs for, which makes it nearly impossible to
+	see how much time was spent actually performing the operations.
+
+
+	2A.3A: Why do all of the options perform similarly for low numbers of threads?
+
+	All of the options perform similarly for low numbers of threads because without many threads, the operations are performed
+	in a more sequential fashion. This makes locking mechanisms less relevant because each thread can only perform one operation at
+	a time, and collisions occur less often. However, when many threads are used, many operations may be running in parallel, and
+	the effects of the various locking mechanisms become much more prevalent.
+
+
+	2A.3B: Why do the three protected operations slow down as the number of threads rises?
+
+	The reason that the three protected operations slow down as the number of threads rise is due to the fact that an increased
+	number of threads causes the costs of locking mechanisms to become more prevalent. When many threads are used, these locking mechanisms
+	must work harder to ensure that only one thread is running at a time. This causes threads to wait longer before performing operations
+	so that the operations do not conflict with those in other threads.
+
+
+	2A.3C: Why are spin-locks so expensive for large numbers of threads?
+
+	When large numbers of threads are used, spin-locks become very expensive due to the fact that while one operation is running, 
+	all other threads are "spinning", which takes up CPU time-slices. Having many threads continuously check to see if they can enter
+	a critical section can be very taxing on the system.
+
+
+File Information:
+
+        README: This file gives information about the files that are included in the project, as well
+        as information regarding features and methods of testing.
+
+        Makefile: This is the makefile that was created to automate useful tasks. The "make" command
+        causes the default target to be executed, which builds the executable program "lab2a". "make clean" can
+	 be used to remove files created by the build process. "make dist" can be used to create a distributable
+	tarball containing the files "README", "Makefile", "lab2a.c", "iterations.png", and "threads.png".
+
+        lab2a.c: This is the C program that was created for this project. It uses the Getopt library to parse
+	command line inputs. The program then creates a specified number of threads to add and subtract from a
+	counter for a specified number of iterations. A supported "sync" option causes the threads to be managed
+	while interacting with the counter in order to ensure proper results. A "yield" option is also included
+	in order to allow threads to yield after performing a calculation.
+
+	threads.png: An image that shows a graph of the average time per operation for a given number of threads.
+	Data is shown for "unprotected", "mutex", "spin-lock", and "compare-and-swap" operation methods. 1000 iterations
+	were used while collecting data.
+
+	iterations.png: An image that shows a graph of the average cost per operation as a function of the number
+	of iterations with a single thread.
+
+
+Options:
+
+	--threads=<numThreads>: Used to specify the number of threads that the program will create.
+
+	--iterations=<numIterations>: Used to specify the number of iterations that each thread will run.
+
+	--yield: Used to specify whether or not each thread should yield during an operation.
+
+	--sync=<syncOption>: Used to specify which sync method should be used to ensure correct output.
+

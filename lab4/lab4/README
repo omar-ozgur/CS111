@@ -1,0 +1,108 @@
+Name: Omar Ozgur
+ID: 704465898
+Class: CS111
+Lab Section: 1C
+Project: Embedded System
+
+*** README ***
+
+Include files:
+  Images (*.png): These images are screenshots of the client programs after
+  specific actions were taken. The descriptions for each screenshot are shown
+  below.
+
+  tls_client.c: This is the modified TLS client program that separates the
+  functionality of sending and receiving messages by placing them in separate
+  threads. It can be compiled by using the original Makefile that was included
+  with the sample project (after including the -pthread flag), along with the
+  header files that was included with the sample project.
+
+  Lab4-E-2.txt: This text file shows all received messages from the server.
+  The duplicate output at one point reflects the two messages that were received
+  when changing the send rate. 1 message was received after sending the message
+  from the client, and 1 message was received after running the "set rate"
+  program.
+
+Image descriptions:
+  Lab4-B-1:
+  This screenshot shows that data is being sent to a server, and that responses
+  are being sent back. There is no mention of encryption being used, or
+  certificates being passed to the server. If no proper security measures are
+  used, it would be possible for others to intercept messages, modify messages,
+  or send their own messages to the server.
+  
+  Lab4-B-2:
+  This screenshot shows that the packet sniffer was able to intercept
+  messages. In this case, the packet sniffer was able to see the heart rate
+  values that were being sent and received. The fact that the data was unencrypted
+  means that it would be possible for adversaries to see data that is being sent
+  between clients and servers, including messages and header information.
+  
+  Lab4-B-3:
+  This screenshot shows that the output begins like it was seen in screenshot
+  Lab4-B-1, but changes after receiving a new send rate from the server. In this
+  case, the new rate was every "2" seconds. The change causes future messages to
+  be sent from the client at a new rate, as seen by the "rate" value in the
+  settings before every sent message.
+  
+  Lab4-B-4:
+  This screenshot shows similar results that were displayed in Lab4-B-3. In this
+  case, the attack caused the client to send messages at a fixed "rate" of every
+  15 seconds. This change was clearly seen in the new messages, which has a "rate"
+  value of 15, after the "new rate" message was received from the server. This
+  attack was possible because the attacking program was able to impersonate the
+  client by sending data over an unencrypted channel.
+  
+  Lab4-D-1:
+  This screenshot shows similar output to that of screenshot Lab4-B-1. However,
+  in this case, it was seen that AES256-SHA encryption was being used to encrypt
+  and decrypt messages, and that a certificate was being used to verify the
+  server. Although the sent and received messages are displayed in the same output
+  as in Lab4-B-1, the encryption makes it so that no meaningful data can be
+  intercepted by adversaries, and the cetificate makes it so that communication
+  can only occur between the client and the trusted server.
+  
+  Lab4-D-2:
+  This screenshot shows output that is similar to the output shown in Lab4-B-2.
+  However, in this case, it can be seen that data that is sent between the client
+  and the server is encrypted. This can also be seen due to the fact that the
+  packet sniffer is receiving "malformed packets". This means that without the
+  proper keys, adversaries would not be able to intercept meaningful data. Since
+  data is being sent through TCP, an ACK is also seen being sent to the client
+  when the server receives a message. This makes the system more reliable than
+  the program that was using UDP connection.
+  
+  Lab4-D-3:
+  This screenshot shows similar output to what was displayed in screenshot
+  Lab4-B-3. Before the rate is changed, the rate is stable at 1 message per 3
+  seconds. However, after a "new rate" message is received from the server,
+  messages are sent at the new rate (1 message every 2 seconds in this case).
+  However, this screenshot shows that there is a problem. After receiving a new
+  rate, the sent and received messages start to have mismatched heart rates. This
+  is due to the fact that sending and receiving messages are done in a set order.
+  If the client sends 1 message, but multiple messages are received (in the case
+  where 1 message is due to the client's message, and 1 is due to the set rate),
+  the first message that is received will be seen as the response for the client's
+  sent message, and the second response will be seen as the response for the
+  client's next sent message. In order to fix this problem, a second thread
+  should be used to deal with received messages whenever the client receives them,
+  instead of keeping them in a buffer.
+  
+  Lab4-D-4:
+  This screenshot shows that the attack on the server doesn't have any effect
+  on the messages that are sent or received by the client. This is seen due to
+  the fact that the settings stay the same for all of the output before and after
+  starting the attack. This is due to the fact that the attack program is
+  attempting to impersonate the client by sending messages through an encrypted
+  channel. When the server attempts to decrypt the messages, the data doesn't make
+  sense. This makes it nearly impossible for an attacker to send messages to the
+  server without proper authentication and encryption methods.
+  
+  Lab4-E-1:
+  This screenshot shows output that is similar to that in screenshot Lab4-D-3, 
+  except that the problem of mismatched heart rates is fixed. By moving the
+  functionality for receiving messages into a new thread, messages can be
+  received by the client at any time. This mostly prevents messages from being
+  sent and received in the wrong order because all messages are dealt with when
+  needed, instead of waiting for a specific sequential ordering of sending and
+  receiving.

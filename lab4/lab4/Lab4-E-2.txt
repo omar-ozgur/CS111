@@ -1,0 +1,13 @@
+Received message 'Heart rate of patient 192.168.43.50 is 72.72' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 69.16' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 72.26' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 72.39' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 73.29' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 67.58 new_rate: 1' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 67.58 new_rate: 1' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 68.68' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 72.15' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 68.22' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 70.43' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 69.82' from server.
+Received message 'Heart rate of patient 192.168.43.50 is 71.03' from server.

@@ -1,0 +1,38 @@
+Name: Omar Ozgur
+ID: 704465898
+Class: CS111
+Lab Section: 1C
+Project: 1a
+
+*** README ***
+
+File Information:
+
+        README: This file gives information about the files that are included in the project, as well
+        as information regarding features and methods of testing.
+
+        Makefile: This is the makefile that was created to automate useful tasks. The "make" command
+        causes the default target to be executed, which builds object files, as well as the resulting
+        "lab1a" executable. "make clean" can be used to delete all makefile-created files from the project
+        directory. "make dist" can be used to create a distributable tarball containing the files "lab1a.c",
+        "Makefile", and "README".
+
+        lab1a.c: This is the C program that was created for this project. After building the executable program
+	"lab1a", the program can be run with the command "./lab1a" in order to place the console into character-
+	at-a-time, no echo mode. When characters are entered from the keyboard, the characters are read into a
+	buffer. These characters could then be analyzed or modified before being written to standard output one
+	character at a time. The functionality was achieved by manipulating processes, threads, signal handlers, 
+	pipes, console settings, and more. This "C" file has comments that explain sections of code in further detail.
+
+Options:
+	
+	--shell: Using the "--shell" option causes a new child process to be created, which runs a bash shell.
+        Characters from the keyboard are piped into the shell, which allows for commands to be executed. The results
+        are piped to a second thread in the parent process.
+
+Limitations:
+	
+	One limitation of the program is that there are many possible signals that were not given custom signal
+	handlers. If any unexpected signals are received when the "--shell" option is being used, the program will 
+	likely terminate without first notifying the shell in the child process. Further work would need to be done
+	to ensure that most signals cause the program to exit as expected.

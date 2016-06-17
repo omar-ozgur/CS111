@@ -1,0 +1,45 @@
+Name: Omar Ozgur
+ID: 704465898
+Class: CS111
+Lab Section: 1C
+Project: 1b
+
+*** README ***
+
+File Information:
+
+        README: This file gives information about the files that are included in the project, as well
+        as information regarding features and methods of testing.
+
+        Makefile: This is the makefile that was created to automate useful tasks. The "make" command
+        causes the default target to be executed, which builds the executable programs "server" and "client". 
+	"make server" or "make client" can be used to create the "server" or "client" executable separately.
+	"make clean" can be used to remove files created by the build process. "make dist" can be used to 
+	create a distributable tarball containing the files "server.c", "client.c", "Makefile", "README", and
+	"my.key".
+
+        server.c: This is the C program that allows for the server program to be created. The server creates a
+	socket and listens for a connection. Once a connection is established, incoming characters are processed
+	and sent to a forked process running a bash shell. The results from the shell are sent back to the server.
+	The server's standard input, standard output, and standard error are redirected to the socket.
+
+	client.c: This is the C program that allows for the client program to be created. The client uses a specified
+	port number to connect to a server process. Characters from standard input are sent through the socket to the
+	server. Output from the server is sent back through the socket to the client, where it is printed to the screen.
+	
+	my.key: This is the file that contains characters which are used by the client and server to encrypt and/or
+	decrypt characters. If encryption is enabled, characters are encrypted before they are sent through the socket,
+	and decrypted when they are read from the socket.
+
+Options:
+	
+	--log=<fileName>: This option can only be used in the client program. This causes bytes to be logged to the
+	specified file when they are sent to the socket, or received from the socket. If encryption is enabled, bytes
+	are logged post-encryption or pre-decryption.
+
+	--port=<portNumber>: This option must be used in the server and client programs. This causes the server to
+	create a socket based on the specified port number, and causes the client to connect to the socket based on
+	the specified port number. The port number that I used for this project was 7026.
+
+	--encrypt: This option causes bytes to be encrypted before being sent through the socket, and causes bytes to be
+	decrypted after reading them from the socket
